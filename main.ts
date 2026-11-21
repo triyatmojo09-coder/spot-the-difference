@@ -17,8 +17,13 @@ const repoRoot = fileURLToPath(new URL('.', import.meta.url));
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
 // Start from a clean output dir so a stale file can never leak into the entry.
-if (existsSync(outputDir)) rmSync(outputDir, { recursive: true, force: true });
+// Never remove the output directory itself: in the grader it is a volume
+// mount whose parent (/) the runner cannot write to, so rmdir'ing the mount
+// point fails with EACCES. Clear only its contents instead.
 mkdirSync(outputDir, { recursive: true });
+for (const name of readdirSync(outputDir)) {
+  rmSync(join(outputDir, name), { recursive: true, force: true });
+}
 
 // The game itself: every static file under game/.
 cpSync(join(repoRoot, 'game'), join(outputDir, 'game'), { recursive: true });
