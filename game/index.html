@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spot the Difference — Five Worlds</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">&#9678;</span>
+      <div>
+        <h1>Spot the Difference</h1>
+        <p class="tagline">Five Worlds &middot; find every hidden change</p>
+      </div>
+    </div>
+    <div id="hud" class="hidden">
+      <div class="hud-pill" id="pill-scene" title="Current scene">🌳 <span id="hud-scene">Taman Pagi</span></div>
+      <div class="hud-pill" id="pill-remaining" title="Differences still to find">🔍 <span id="hud-remaining">6</span> left</div>
+      <div class="hud-pill" id="pill-timer" title="Time left">⏱ <span id="hud-timer">02:00</span></div>
+      <div class="hud-pill" id="pill-hints" title="Hints left">💡 <span id="hud-hints">3</span></div>
+      <button class="hud-btn" id="btn-hint" type="button" title="Hint (H)">Hint</button>
+      <button class="hud-btn" id="btn-magnifier" type="button" title="Magnifier (M)" aria-pressed="false">🔎 Lens</button>
+      <button class="hud-btn" id="btn-levels" type="button" title="Level select (Esc)">Levels</button>
+    </div>
+  </header>
+
+  <main id="stage">
+    <!-- Level select screen -->
+    <section id="screen-select" class="screen">
+      <h2>Choose a world</h2>
+      <p class="screen-sub">Two pictures, side by side. Spot every difference before the clock runs out.</p>
+      <div id="level-grid" class="level-grid"></div>
+      <div class="howto">
+        <h3>How to play</h3>
+        <ul>
+          <li><b>Click</b> a difference on either picture — a ring marks it on both.</li>
+          <li>Each scene hides <b>6 differences</b>, picked at random every play.</li>
+          <li>Wrong clicks cost <b>5 seconds</b>. Hints are limited — use them wisely.</li>
+          <li>Press <b>H</b> for a hint, <b>M</b> for the magnifier lens, <b>Esc</b> for levels.</li>
+          <li>Finish fast with few mistakes to earn <b>3 stars</b>. Progress is saved on this device.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Play screen -->
+    <section id="screen-play" class="screen hidden">
+      <div id="panels">
+        <figure class="panel">
+          <figcaption>Picture A</figcaption>
+          <div class="canvas-wrap">
+            <canvas id="canvas-a" width="560" height="400"></canvas>
+          </div>
+        </figure>
+        <figure class="panel">
+          <figcaption>Picture B <span class="panel-note">— spot what changed</span></figcaption>
+          <div class="canvas-wrap">
+            <canvas id="canvas-b" width="560" height="400"></canvas>
+          </div>
+        </figure>
+      </div>
+      <canvas id="lens" width="180" height="180" class="hidden" aria-hidden="true"></canvas>
+      <p id="message" role="status" aria-live="polite"></p>
+      <div id="found-strip" aria-label="Differences found"></div>
+    </section>
+
+    <!-- Win / timeout overlay -->
+    <div id="overlay" class="hidden" role="dialog" aria-modal="true">
+      <div id="overlay-card">
+        <h2 id="overlay-title">World complete!</h2>
+        <div id="overlay-stars" aria-label="Stars earned">★★★</div>
+        <p id="overlay-detail"></p>
+        <div class="overlay-actions">
+          <button id="btn-next" class="btn-primary" type="button">Next world →</button>
+          <button id="btn-replay" class="btn-secondary" type="button">Play again</button>
+          <button id="btn-overlay-levels" class="btn-secondary" type="button">All worlds</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>An original game — every scene is drawn in code, no photos, no copied art.</span>
+    <span id="progress-summary"></span>
+  </footer>
+</div>
+<p id="status" class="sr-only" role="status" aria-live="polite"></p>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
